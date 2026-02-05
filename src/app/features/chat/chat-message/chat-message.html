@@ -1,0 +1,53 @@
+<div class="flex gap-4 p-4 hover:bg-white/5 transition-colors group" [class.flex-row-reverse]="message.role === 'user'"
+    [class.bg-blue-500_5]="message.role === 'assistant'">
+
+    <!-- Avatar -->
+    <div class="flex-shrink-0 mt-1">
+        <div *ngIf="message.role === 'assistant'"
+            class="w-8 h-8 rounded-lg bg-gradient-to-br from-blue-500 to-purple-600 flex items-center justify-center shadow-lg shadow-blue-500/20">
+            <lucide-icon [img]="icons.Bot" class="w-5 h-5 text-white"></lucide-icon>
+        </div>
+        <div *ngIf="message.role === 'user'"
+            class="w-8 h-8 rounded-full bg-slate-700 flex items-center justify-center border border-slate-600">
+            <lucide-icon [img]="icons.User" class="w-5 h-5 text-slate-300"></lucide-icon>
+        </div>
+    </div>
+
+    <!-- Content -->
+    <div class="flex flex-col max-w-[80%]" [class.items-end]="message.role === 'user'">
+
+        <!-- Meta -->
+        <div class="flex items-center gap-2 mb-1" [class.flex-row-reverse]="message.role === 'user'">
+            <span class="font-bold text-sm text-slate-200">
+                {{ message.role === 'user' ? 'You' : 'Enterprise AI' }}
+            </span>
+            <span class="text-xs text-slate-500">{{ message.timestamp | date:'shortTime' }}</span>
+        </div>
+
+        <!-- Bubble -->
+        <div class="text-sm leading-relaxed whitespace-pre-wrap rounded-2xl px-4 py-3 shadow-sm border"
+            [class.bg-blue-600]="message.role === 'user'" [class.text-white]="message.role === 'user'"
+            [class.border-blue-500]="message.role === 'user'" [class.rounded-tr-none]="message.role === 'user'"
+            [class.bg-slate-800]="message.role === 'assistant'" [class.text-slate-100]="message.role === 'assistant'"
+            [class.border-slate-700]="message.role === 'assistant'"
+            [class.rounded-tl-none]="message.role === 'assistant'">
+
+            {{ message.content }}
+        </div>
+
+        <!-- Actions (Assistant Only) -->
+        <div *ngIf="message.role === 'assistant'"
+            class="mt-2 flex items-center gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+            <button class="p-1.5 rounded hover:bg-white/10 text-slate-400 hover:text-slate-200" title="Copy">
+                <lucide-icon [img]="icons.Copy" class="w-3.5 h-3.5"></lucide-icon>
+            </button>
+            <button class="p-1.5 rounded hover:bg-white/10 text-slate-400 hover:text-slate-200" title="Helpful">
+                <lucide-icon [img]="icons.ThumbsUp" class="w-3.5 h-3.5"></lucide-icon>
+            </button>
+            <button class="p-1.5 rounded hover:bg-white/10 text-slate-400 hover:text-slate-200" title="Not Helpful">
+                <lucide-icon [img]="icons.ThumbsDown" class="w-3.5 h-3.5"></lucide-icon>
+            </button>
+        </div>
+
+    </div>
+</div>
