@@ -47,21 +47,8 @@ export class AuthService {
     }
 
     private handleAuthFail() {
-        // Fallback Mock User for development
-        this.currentUserSubject.next({
-            domainAccount: 'dev\\local',
-            fullName: 'Local Developer',
-            companyEmail: 'dev@local',
-            department: 'Development',
-            team: 'Dev Team',
-            teamId: 0,
-            role: 'Developer',
-            employeeId: 0,
-            isAuthenticated: true,
-            id: 'local',
-            name: 'Local Developer',
-            email: 'dev@local'
-        });
+        console.warn('Auth failed or user not found. User remains unauthenticated.');
+        this.currentUserSubject.next(null);
     }
 
     logout() {

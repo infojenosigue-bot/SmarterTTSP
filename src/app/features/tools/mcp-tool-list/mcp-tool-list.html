@@ -1,1 +1,82 @@
-<p>mcp-tool-list works!</p>
+<div class="p-4 rounded-lg bg-gray-900 border border-gray-700 space-y-4">
+    <div class="flex justify-between items-center mb-4">
+        <h2 class="text-xl font-bold text-gray-100">MCP Servers & Tools</h2>
+        <button (click)="refreshTools()"
+            class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded text-sm transition-colors">
+            Refresh
+        </button>
+    </div>
+
+    <!-- Servers Section -->
+    <div class="bg-gray-800 rounded p-3 mb-4">
+        <h3 class="text-sm font-semibold text-gray-400 uppercase mb-2">Connected Servers</h3>
+        <div class="space-y-2">
+            <div *ngFor="let conn of connections$ | async"
+                class="flex items-center justify-between p-2 rounded bg-gray-900/50 border border-gray-700">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full" [class.bg-green-500]="conn.status === 'connected'"
+                        [class.bg-red-500]="conn.status === 'error'"
+                        [class.bg-gray-500]="conn.status === 'disconnected'">
+                    </span>
+                    <span class="text-sm text-gray-300 font-mono text-xs">{{ conn.url }}</span>
+                </div>
+                <div class="text-xs text-gray-400 capitalize">{{ conn.status }}</div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Tools Section -->
+    <!-- Tools Section -->
+    <div>
+        <h3 class="text-sm font-semibold text-gray-400 uppercase mb-2">Available Tools</h3>
+
+        <div class="flex flex-col gap-2">
+            <ng-container *ngFor="let tool of tools$ | async">
+                <div
+                    class="flex flex-col gap-2 p-3 rounded bg-gray-800 border border-gray-700 hover:border-gray-600 transition-colors">
+
+                    <div class="flex items-start gap-3">
+                        <div class="mt-1">
+                            <!-- Icon Placeholder -->
+                            <div class="w-8 h-8 rounded bg-gray-700 flex items-center justify-center text-gray-400">
+                                <span class="text-xs font-bold">{{ tool.category?.[0]?.toUpperCase() || 'T' }}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex-1 min-w-0">
+                            <div class="flex items-center justify-between">
+                                <h4 class="text-sm font-medium text-gray-200 truncate">{{ tool.name }}</h4>
+                                <label class="relative inline-flex items-center cursor-pointer">
+                                    <input type="checkbox" [checked]="tool.status === 'enabled'"
+                                        (change)="toggleTool(tool.name)" class="sr-only peer">
+                                    <div
+                                        class="w-9 h-5 bg-gray-600 peer-focus:outline-none peer-focus:ring-2 peer-focus:ring-blue-500 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-blue-600">
+                                    </div>
+                                </label>
+                            </div>
+                            <p class="text-xs text-gray-400 mt-1 line-clamp-2">{{ tool.description || 'No description
+                                available' }}</p>
+
+                            <!-- Tool schema inspect (optional) -->
+                            <div *ngIf="tool.inputSchema"
+                                class="mt-2 text-xs text-gray-500 font-mono bg-gray-900/50 p-1 rounded overflow-hidden truncate">
+                                Schema available
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tool Results (if AI or user invoked) -->
+                    <div *ngIf="tool.lastResult"
+                        class="mt-2 text-xs text-gray-300 font-mono bg-gray-900/30 p-2 rounded overflow-auto max-h-48">
+                        <pre>{{ tool.lastResult | json }}</pre>
+                    </div>
+                </div>
+            </ng-container>
+
+            <div *ngIf="(tools$ | async)?.length === 0" class="text-center py-8 text-gray-500">
+                No tools available. Refresh to try again.
+            </div>
+        </div>
+    </div>
+</div>

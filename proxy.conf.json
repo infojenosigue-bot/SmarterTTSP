@@ -1,0 +1,11 @@
+{
+  "/api/excel-mcp": {
+    "target": "https://localhost:44333",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/excel-mcp": "/mcp"
+    },
+    "logLevel": "debug"
+  }
+}
