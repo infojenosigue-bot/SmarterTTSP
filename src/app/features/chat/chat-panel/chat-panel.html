@@ -1,7 +1,9 @@
 <div class="flex flex-col h-full relative">
 
     <!-- Header -->
-    <app-chat-header></app-chat-header>
+    <app-chat-header [title]="'New Chat'" [models]="availableModels" [selectedModel]="(selectedModel$ | async)!"
+        (modelSelected)="onModelSelected($event)">
+    </app-chat-header>
 
     <!-- Messages Area -->
     <div #scrollContainer class="flex-1 overflow-y-auto custom-scrollbar flex flex-col gap-2 pb-4 scroll-smooth">
@@ -14,7 +16,7 @@
             </div>
             <h3 class="text-xl font-bold text-slate-200 mb-2">Welcome to Smarter TTSP</h3>
             <p class="text-slate-400 max-w-md">Start a new conversation or select an existing one from the sidebar. I
-                have access to corporate billing, engineering SOPs, and employee data.</p>
+                have access to information loaded in my memory, work procedures, company policies and more.</p>
         </div>
 
         <!-- Message List -->

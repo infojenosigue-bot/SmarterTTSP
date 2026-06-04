@@ -1,6 +1,7 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LucideAngularModule, Settings, ChevronDown, Bot, Sparkles } from 'lucide-angular';
+import { LucideAngularModule, Settings, ChevronDown, Bot, Sparkles, Check, Database, Power, X, Zap, Cloud, Cpu, Layers, Settings2 } from 'lucide-angular';
+import { ChatModel } from '../../../core/models/chat.models';
 
 @Component({
   selector: 'app-chat-header',
@@ -11,7 +12,28 @@ import { LucideAngularModule, Settings, ChevronDown, Bot, Sparkles } from 'lucid
 })
 export class ChatHeader {
   @Input() title: string = 'New Chat';
-  @Input() model: string = 'GPT-4.5 Turbo';
+  @Input() models: ChatModel[] = [];
+  @Input() selectedModel?: ChatModel;
+  @Output() modelSelected = new EventEmitter<ChatModel>();
 
-  readonly icons = { Settings, ChevronDown, Bot, Sparkles };
+  showModelDropdown = false;
+  showSettingsDropdown = false;
+
+  readonly icons = { Settings, ChevronDown, Bot, Sparkles, Check, Database, Power, X, Zap, Cloud, Cpu, Layers, Settings2 };
+
+  toggleModelDropdown() {
+    this.showModelDropdown = !this.showModelDropdown;
+    if (this.showModelDropdown) this.showSettingsDropdown = false;
+  }
+
+  toggleSettingsDropdown() {
+    this.showSettingsDropdown = !this.showSettingsDropdown;
+    if (this.showSettingsDropdown) this.showModelDropdown = false;
+  }
+
+  selectModel(model: ChatModel) {
+    this.selectedModel = model;
+    this.modelSelected.emit(model);
+    this.showModelDropdown = false;
+  }
 }

@@ -54,6 +54,12 @@ ng e2e
 
 Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
 
+## Architecture Overview
+
+**MCP communication**: the Angular frontend now interacts solely with the ASP.NET API (`/api/mcp`).
+The backend manages the Server‑Sent Events (SSE) connection to the Excel‑MCP Python server and exposes simple
+`/tools` and `/invoke` endpoints.  No client code directly talks to the Python process.
+
 ## Additional Resources
 
 For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.

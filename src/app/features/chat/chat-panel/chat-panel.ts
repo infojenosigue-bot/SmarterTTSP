@@ -4,6 +4,7 @@ import { ChatService } from '../../../core/services/chat.service';
 import { ChatMessage } from '../chat-message/chat-message';
 import { ChatInput } from '../chat-input/chat-input';
 import { ChatHeader } from '../chat-header/chat-header';
+import { ChatModel, AVAILABLE_MODELS } from '../../../core/models/chat.models';
 
 @Component({
   selector: 'app-chat-panel',
@@ -17,11 +18,18 @@ export class ChatPanel implements AfterViewChecked {
 
   messages$ = this.chatService.messages$;
   isLoading$ = this.chatService.isLoading$;
+  selectedModel$ = this.chatService.selectedModel$;
+  isExcelMcpEnabled$ = this.chatService.isExcelMcpEnabled$;
+  availableModels = AVAILABLE_MODELS;
 
   @ViewChild('scrollContainer') privatescrollContainer!: ElementRef;
 
   sendMessage(text: string) {
     this.chatService.sendMessage(text);
+  }
+
+  onModelSelected(model: ChatModel) {
+    this.chatService.setModel(model.id);
   }
 
   ngAfterViewChecked() {

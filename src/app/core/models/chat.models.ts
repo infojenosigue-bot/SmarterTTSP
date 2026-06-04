@@ -27,6 +27,19 @@ export interface ChatMessage {
     timestamp: Date;
     attachments?: ChatAttachment[];
     isTyping?: boolean; // For UI loading state
+    toolCalls?: ToolCall[];
+    toolResults?: ToolResult[];
+}
+
+export interface ToolCall {
+    id: string;
+    name: string;
+    arguments: any;
+}
+
+export interface ToolResult {
+    toolCallId: string;
+    result: any;
 }
 
 export interface ChatAttachment {
@@ -51,6 +64,9 @@ export interface McpTool {
     status: 'enabled' | 'disabled';
     icon?: string;
     category?: 'data' | 'utility' | 'system';
+    inputSchema?: string;
+    serverId?: string;
+    lastResult?: any;
 }
 
 export interface McpToolRequest {
@@ -63,3 +79,28 @@ export interface McpToolResponse {
     result: any;
     status: 'success' | 'error';
 }
+
+export type ModelId = 'gemini-2.5-flash' | 'gemini-1.5-pro' | 'gpt-4-turbo';
+
+export interface ChatModel {
+    id: ModelId;
+    name: string;
+    description: string;
+    icon?: string;
+    provider: 'Google' | 'OpenAI' | 'Anthropic';
+}
+
+export const AVAILABLE_MODELS: ChatModel[] = [
+    {
+        id: 'gemini-2.5-flash',
+        name: 'Gemini 2.5 Flash',
+        description: 'Fastest and most cost-effective model for high-frequency tasks',
+        provider: 'Google'
+    },
+    {
+        id: 'gemini-1.5-pro',
+        name: 'Gemini 1.5 Pro',
+        description: 'Best performing model for complex reasoning and coding',
+        provider: 'Google'
+    }
+];
