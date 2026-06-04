@@ -19,7 +19,8 @@ export interface DocumentMetadata {
 })
 export class KnowledgeService {
     private http = inject(HttpClient);
-    private apiUrl = 'https://localhost:44333/api/knowledge';
+    //private apiUrl = 'https://localhost:44333/api/knowledge';
+    private apiUrl = 'http://srb096189:8081/api/knowledge';
 
     getDocuments(): Observable<DocumentMetadata[]> {
         return this.http.get<DocumentMetadata[]>(this.apiUrl);

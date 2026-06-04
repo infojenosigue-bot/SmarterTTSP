@@ -17,7 +17,8 @@ export interface McpServerConfig {
 export class McpService {
     private http = inject(HttpClient);
     // URL of the ASP.NET backend; assume same origin in production
-    private backendUrl = 'https://localhost:44333/api/mcp';
+    //private backendUrl = 'https://localhost:44333/api/mcp'; 
+    private backendUrl = 'http://srb096189:8081/api/mcp';
 
     private toolsSubject = new BehaviorSubject<McpTool[]>([]);
     tools$ = this.toolsSubject.asObservable();

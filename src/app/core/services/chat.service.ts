@@ -14,7 +14,8 @@ export class ChatService {
     private isLoadingSubject = new BehaviorSubject<boolean>(false);
     private selectedModelSubject = new BehaviorSubject<ChatModel>(AVAILABLE_MODELS[0]);
 
-    private readonly API_BASE_URL = 'https://localhost:44333/api/chat';
+    //private readonly API_BASE_URL = 'https://localhost:44333/api/chat';
+    private readonly API_BASE_URL = 'http://srb096189:8081/api/chat'; // Update with your actual backend URL
     // Excel MCP endpoint is now managed by backend configuration
 
     sessions$ = this.sessionsSubject.asObservable();
@@ -135,7 +136,8 @@ export class ChatService {
         let serverNames: string[] = [];
         try {
             // note: the MCP tools endpoint lives under /api/mcp, not /api/chat
-            serverNames = await firstValueFrom(this.http.get<string[]>(`https://localhost:44333/api/mcp/tools`));
+            // serverNames = await firstValueFrom(this.http.get<string[]>(`https://localhost:44333/api/mcp/tools`));
+             serverNames = await firstValueFrom(this.http.get<string[]>(`http://srb096189:8081/api/mcp/tools`));
             serverNames.forEach(n => {
                 // Respect legacy tool toggles (queryKnowledgeBase/readDocument);
                 // keep other server tools available as before.
